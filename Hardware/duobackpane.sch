@@ -16496,11 +16496,11 @@ Simple RJ45, 8-pin connection - connector for common Cat5, Cat5e, and Cat6 Ether
 <part name="R4" library="resistor" deviceset="R-EU_" device="R0805" value="330R"/>
 <part name="U1" library="rohm-semi" deviceset="BAXXDD0XX" device=""/>
 <part name="SUPPLY1" library="supply2" deviceset="GND" device=""/>
-<part name="C1" library="resistor" deviceset="CPOL-EU" device="SMCA"/>
-<part name="C2" library="resistor" deviceset="C-EU" device="C0805"/>
-<part name="C3" library="resistor" deviceset="C-EU" device="C0805"/>
-<part name="C4" library="resistor" deviceset="C-EU" device="C0805"/>
-<part name="C5" library="resistor" deviceset="C-EU" device="C0805"/>
+<part name="C1" library="resistor" deviceset="CPOL-EU" device="SMCA" value="33uF"/>
+<part name="C2" library="resistor" deviceset="C-EU" device="C0805" value="100nF"/>
+<part name="C3" library="resistor" deviceset="C-EU" device="C0805" value="100nF"/>
+<part name="C4" library="resistor" deviceset="C-EU" device="C0805" value="100nF"/>
+<part name="C5" library="resistor" deviceset="C-EU" device="C0805" value="100nF"/>
 <part name="LED1" library="led" deviceset="LED" device="SML1206" value="LNK"/>
 <part name="LED2" library="led" deviceset="LED" device="SML1206" value="SPD"/>
 <part name="+3V1" library="supply1" deviceset="+3V3" device=""/>

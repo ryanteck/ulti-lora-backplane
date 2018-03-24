@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.635" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.025" altunitdist="inch" altunit="inch"/>
+<grid distance="0.64" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.025" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
@@ -38,7 +38,7 @@
 <layer number="42" name="bRestrict" color="1" fill="10" visible="yes" active="yes"/>
 <layer number="43" name="vRestrict" color="2" fill="10" visible="yes" active="yes"/>
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="yes"/>
-<layer number="45" name="Holes" color="7" fill="1" visible="no" active="yes"/>
+<layer number="45" name="Holes" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="46" name="Milling" color="3" fill="1" visible="no" active="yes"/>
 <layer number="47" name="Measures" color="7" fill="1" visible="no" active="yes"/>
 <layer number="48" name="Document" color="7" fill="1" visible="yes" active="yes"/>
@@ -181,12 +181,17 @@ for ic880a &amp; RAK831
 (C) Ryan Walmsley 2018</text>
 <text x="10.795" y="32.385" size="1.778" layer="25" font="vector" rot="R90">RAK831</text>
 <text x="39.37" y="69.85" size="1.778" layer="25" font="vector">ic880a</text>
-<text x="36.195" y="13.335" size="1.778" layer="25" font="vector" rot="R90">V 23/03/2018-01</text>
+<text x="36.195" y="13.335" size="1.778" layer="25" font="vector" rot="R90">V 24/03/2018-01</text>
 <text x="71.12" y="60.96" size="1.778" layer="25" font="vector">ETH</text>
 <text x="6.985" y="61.595" size="1.778" layer="25" font="vector">Only use EITHER RAK831 or iC880A</text>
 <text x="59.055" y="10.16" size="1.778" layer="25" font="vector">HOT</text>
 <text x="9.525" y="10.16" size="1.778" layer="26" font="vector" rot="MR90">Open Source Hardware
 Github.com/ryanteck/ulti-lora-backplane</text>
+<hole x="77.5" y="9.89" drill="3.2"/>
+<hole x="80" y="6" drill="3.2"/>
+<hole x="80" y="67.5" drill="3.2"/>
+<hole x="7" y="67.5" drill="3.2"/>
+<hole x="7.04" y="6" drill="3.2"/>
 </plain>
 <libraries>
 <library name="pinhead">
@@ -2147,11 +2152,11 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <element name="R3" library="resistor" package="R0805" value="330R" x="46.355" y="12.7" rot="R90"/>
 <element name="R4" library="resistor" package="R0805" value="330R" x="50.165" y="17.145" rot="R90"/>
 <element name="U1" library="rohm-semi" package="HRP5" value="BAXXDD0XX" x="60.96" y="22.86" rot="R180"/>
-<element name="C1" library="resistor" package="SMC_A" value="" x="49.53" y="26.67" rot="R180"/>
-<element name="C2" library="resistor" package="C0805" value="" x="67.945" y="27.305"/>
-<element name="C3" library="resistor" package="C0805" value="" x="45.085" y="56.515" rot="R270"/>
-<element name="C4" library="resistor" package="C0805" value="" x="70.485" y="3.81"/>
-<element name="C5" library="resistor" package="C0805" value="" x="10.795" y="51.435" rot="R180"/>
+<element name="C1" library="resistor" package="SMC_A" value="33uF" x="49.53" y="26.67" rot="R180"/>
+<element name="C2" library="resistor" package="C0805" value="100nF" x="67.945" y="27.305"/>
+<element name="C3" library="resistor" package="C0805" value="100nF" x="45.085" y="56.515" rot="R270"/>
+<element name="C4" library="resistor" package="C0805" value="100nF" x="70.485" y="3.81"/>
+<element name="C5" library="resistor" package="C0805" value="100nF" x="10.795" y="51.435" rot="R180"/>
 <element name="LED1" library="led" package="SML1206" value="LNK" x="50.165" y="6.985" rot="R270"/>
 <element name="LED2" library="led" package="SML1206" value="SPD" x="45.085" y="6.985" rot="R270"/>
 <element name="LED3" library="led" package="SML1206" value="PWR" x="5.715" y="71.755" rot="R180"/>
