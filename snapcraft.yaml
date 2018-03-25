@@ -7,26 +7,35 @@ confinement: devmode
 build-packages: [protobuf-compiler, libprotobuf-dev, libprotoc-dev, automake, libtool, autoconf, python-dev, make]
 
 parts:
-  lora_gateway:
-    plugin: autotools
+  loragateway:
+    plugin: make
     source-type: git
     source: https://github.com/kersing/lora_gateway.git
+    source-subdir: libloragw
   protobuf-c:
     plugin: autotools
     source-type: git
     source: https://github.com/kersing/protobuf-c.git
+    after:
+      - loragateway
   paho-mqtt:
     plugin: autotools
     source-type: git
     source: https://github.com/kersing/paho.mqtt.embedded-c.git
+    after:
+      - protobuf-c
   ttn-gateway-connector:
     plugin: autotools
     source-type: git
     source: https://github.com/kersing/ttn-gateway-connector.git
-  packet_forwarder:
+    after:
+      - paho-mqtt
+  packetforwarder:
     plugin: autotools
     source-type: git
     source: https://github.com/kersing/packet_forwarder.git
+    after:
+      - ttn-gateway-connector
 
 apps:
   packet-forwarder:
