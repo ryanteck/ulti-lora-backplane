@@ -1,58 +1,36 @@
 name: ulti-lora-backplane
 version: 0.0.1
 summary: TTN LoRa Packet Forwarder
-description: Collection of packages required for LoRa Packet Forwarding
+description: Collection of packages required for LoRa Packet Forwarding, currently using the old multitech packet forwarder
 
 confinement: devmode
-build-packages: [protobuf-compiler, libprotobuf-dev, libprotoc-dev, automake, libtool, autoconf, python-dev, make, libprotobuf-c-dev]
+build-packages: [automake, libtool, autoconf, python-dev, make]
 
 parts:
   loragateway:
     plugin: make
     source-type: git
-    source: https://github.com/ryanteck/lora_gateway.git
-    source-subdir: libloragw/
-    make-parameters:
-      - libloragw.a
-    artifacts:
-      - ../libloragw
-    stage:
-      - libloragw
-  paho.mqtt.embedded-c:
-    plugin: make
-    source-type: git
-    source: https://github.com/kersing/paho.mqtt.embedded-c.git
-    after:
-      - loragateway
+    source: https://github.com/Lora-net/lora_gateway.git
     build:
-      make
-    install:
-      sudo make install
-    #make-install-var: /usr/local/lib/
-  ttn-gateway-connector:
-    plugin: make
-    source-type: git
-    source: https://github.com/ryanteck/ttn-gateway-connector.git
-    prepare:
-      cp config.mk.in config.mk
+      make all -e -C libloragw
     artifacts:
-      - bin/libttn-gateway-connector.so
-    after:
-      - paho.mqtt.embedded-c
+      - libloragw/*
+    install: |
+      mkdir $SNAPCRAFT_PART_INSTALL/lib/
+      mkdir $SNAPCRAFT_PART_INSTALL/lib/libloragw
+      cp -r libloragw $SNAPCRAFT_PART_INSTALL/lib/
   packetforwarder:
     plugin: make
     source-type: git
-    source: https://github.com/kersing/packet_forwarder.git
-    source-subdir: mp_pkt_fwd
-    prepare:
-      pwd
+    source: https://github.com/Lora-net/packet_forwarder.git
     make-parameters:
-      - LGW_PATH="$SNAPCRAFT_STAGE/usr/local/libloragw"
-      - TTN_INC="-I../../../../ttn-gateway-connector/build/src -I../../../ttn-gateway-connector/build/github.com/gogo/protobuf/protobuf -I../../ttn-gateway-connector/src/github.com/TheThingsNetwork -I../../protobuf-c"
-
+      - LGW_PATH=$SNAPCRAFT_STAGE/lib/libloragw
+    artifacts:
+      - lora_pkt_fwd/lora_pkt_fwd
+      - lora_pkt_fwd/global_conf.json
     after:
-      - ttn-gateway-connector
+      - loragateway
 
 apps:
   packet-forwarder:
-    command: packet_forwarder
+    command: lora_pkt_fwd/lora_pkt_fwd
