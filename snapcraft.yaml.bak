@@ -1,0 +1,42 @@
+name: ulti-lora-backplane
+version: 0.1.9
+summary: TTN LoRa Packet Forwarder
+description: Collection of packages required for LoRa Packet Forwarding, currently using the old multitech packet forwarder
+
+confinement: classic
+build-packages: [automake, libtool, autoconf, python-dev, make]
+
+parts:
+  loragateway:
+    plugin: make
+    source-type: git
+    source: https://github.com/ryanteck/lora_gateway.git
+    build:
+      make all -e -C libloragw
+    artifacts:
+      - libloragw/*
+    install: |
+      mkdir $SNAPCRAFT_PART_INSTALL/lib/
+      mkdir $SNAPCRAFT_PART_INSTALL/lib/libloragw
+      cp -r libloragw $SNAPCRAFT_PART_INSTALL/lib/
+  packetforwarder:
+    plugin: make
+    source-type: git
+    source: https://github.com/ryanteck/packet_forwarder.git
+    make-parameters:
+      - LGW_PATH=$SNAPCRAFT_STAGE/lib/libloragw
+    artifacts:
+      - lora_pkt_fwd/lora_pkt_fwd
+      - lora_pkt_fwd/global_conf.json
+      #- lora_pkt_fwd/local_conf.json
+      - lora_pkt_fwd/start.sh
+    after:
+      - loragateway
+
+apps:
+  pktfwd:
+    command: lora_pkt_fwd/start.sh
+    plugs: [network, spi]
+    daemon: simple
+    stop-timeout: 1s
+    restart-condition: on-failure
