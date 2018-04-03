@@ -87,8 +87,8 @@ parts:
       - loragateway
       - paho.mqtt.embedded-c
       - protobuf-c
-      artifacts:
-        - mp_pkt_fwd/mp_pkt_fwd
+    artifacts:
+      - mp_pkt_fwd/mp_pkt_fwd
 
 apps:
   packet-forwarder:
