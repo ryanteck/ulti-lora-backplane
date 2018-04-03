@@ -92,4 +92,4 @@ parts:
 
 apps:
   packet-forwarder:
-    command: mp_pkt_fwd
+    command: mp_pkt_fwd/mp_pkt_fwd
