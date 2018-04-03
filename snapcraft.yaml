@@ -66,7 +66,7 @@ parts:
     artifacts:
       - bin/libttn-gateway-connector.so
     install: |
-      cp bin/libttn-gateway-connector.so $SNAPCRAFT_PART_INSTALL/lib/
+      cp bin/libttn-gateway-connector.so $SNAPCRAFT_PART_INSTALL/lib/libttn-gateway-connector.so
       mkdir $SNAPCRAFT_PART_INSTALL/lib/
       cp -r . $SNAPCRAFT_PART_INSTALL/lib/ttn-gateway-connector/
     after:
