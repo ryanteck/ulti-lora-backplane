@@ -1,10 +1,10 @@
 name: ulti-lora-backplane
-version: 0.0.1
+version: 0.2.0
 summary: TTN LoRa Packet Forwarder
 description: Collection of packages required for LoRa Packet Forwarding
 
 confinement: devmode
-build-packages: [protobuf-compiler, libprotobuf-dev, libprotoc-dev, automake, libtool, autoconf, python-dev, make, libprotobuf-c-dev]
+build-packages: [protobuf-compiler, libprotoc-dev, libprotobuf-dev, automake, libtool, autoconf, python-dev, make, libprotobuf-c-dev, libc6-dev]
 
 parts:
    loragateway:
@@ -20,32 +20,41 @@ parts:
       mkdir $SNAPCRAFT_PART_INSTALL/lib/
       mkdir $SNAPCRAFT_PART_INSTALL/lib/libloragw
       cp -r libloragw $SNAPCRAFT_PART_INSTALL/lib/
+
    protobuf-c:
     plugin: make
     source-type: git
     source: https://github.com/kersing/protobuf-c.git
-    build-packages: [libprotobuf-c-dev,libprotobuf-dev, protobuf-c-compiler]
+    build-packages: [libprotobuf-c-dev,libprotobuf-dev, protobuf-c-compiler, libprotoc-dev]
     build: |
       ./autogen.sh
-      ./configure
+      ./configure LIBS="-I$SNAPCRAFT_STAGE/src/google/protobuf/compiler/"
       make protobuf-c/libprotobuf-c.la
       mkdir bin
       ./libtool install /usr/bin/install -c protobuf-c/libprotobuf-c.la `pwd`/bin
       rm -f `pwd`/bin/*so*
-    prepare:
-      git clone https://github.com/google/protobuf.git
+
+    install: |
+      mkdir $SNAPCRAFT_PART_INSTALL/lib/
+      cp -r . $SNAPCRAFT_PART_INSTALL/lib/protobuf-c
+      sudo make install
+
+    after:
+      - loragateway
    paho.mqtt.embedded-c:
     plugin: make
     source-type: git
     source: https://github.com/kersing/paho.mqtt.embedded-c.git
     after:
-      - loragateway
+      - protobuf-c
     build:
       make
-    install:
+    install: |
+      mkdir $SNAPCRAFT_PART_INSTALL/lib/
+      cp -r . $SNAPCRAFT_PART_INSTALL/lib/paho.mqtt.embedded-c/
       sudo make install
     prepare:
-      sudo rm /usr/local/lib/libpaho-embed-mqtt3c.so
+      sudo rm /usr/local/lib/libpaho-embed-mqtt3c.so  || true
     #make-install-var: /usr/local/lib/
    ttn-gateway-connector:
     plugin: make
@@ -65,14 +74,14 @@ parts:
     plugin: make
     source-type: git
     source: https://github.com/kersing/packet_forwarder.git
+    build-packages: [libc6-dev, libc6]
     #source-subdir: mp_pkt_fwd
-    prepare: |
-      git clone https://github.com/google/protobuf.git
 
     make-parameters:
       - LGW_PATH=$SNAPCRAFT_STAGE/lib/libloragw
-      - TTN_INC=-I$SNAPCRAFT_STAGE/lib/ttn-gateway-connector/src -I$SNAPCRAFT_STAGE/lib/ttn-gateway-connector/github.com/gogo/protobuf/protobuf/ -I$SNAPCRAFT_STAGE/lib/ttn-gateway-connector/src/github.com/TheThingsNetwork -I$SNAPCRAFT_STAGE/libprotobuf-c
-
+      - TTN_INC=-I$SNAPCRAFT_STAGE/lib/ttn-gateway-connector/src -I$SNAPCRAFT_STAGE/lib/ttn-gateway-connector/src/github.com/gogo/protobuf/protobuf/ -I$SNAPCRAFT_STAGE/lib/ttn-gateway-connector/src/github.com/TheThingsNetwork -I$SNAPCRAFT_STAGE/libprotobuf-c
+      - LIBS += -L$SNAPCRAFT_STAGE/lib/paho.mqtt.embedded-c/build/output -lpaho-embed-mqtt3c -L$SNAPCRAFT_STAGE/lib/ttn-gateway-connector/bin -lttn-gateway-connector -L$SNAPCRAFT_STAGE/lib//protobuf-c/bin -lprotobuf-c
+      - FLAGS = -L /lib 
     after:
       - ttn-gateway-connector
       - loragateway
