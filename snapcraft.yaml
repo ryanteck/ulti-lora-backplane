@@ -1,5 +1,5 @@
 name: ulti-lora-backplane
-version: 0.2.1
+version: 0.2.2
 summary: TTN LoRa Packet Forwarder
 description: Collection of packages required for LoRa Packet Forwarding
 
@@ -66,6 +66,7 @@ parts:
     artifacts:
       - bin/libttn-gateway-connector.so
     install: |
+      cp bin/libttn-gateway-connector.so $SNAPCRAFT_PART_INSTALL/lib/
       mkdir $SNAPCRAFT_PART_INSTALL/lib/
       cp -r . $SNAPCRAFT_PART_INSTALL/lib/ttn-gateway-connector/
     after:
