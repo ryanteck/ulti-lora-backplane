@@ -81,13 +81,14 @@ parts:
       - LGW_PATH=$SNAPCRAFT_STAGE/lib/libloragw
       - TTN_INC=-I$SNAPCRAFT_STAGE/lib/ttn-gateway-connector/src -I$SNAPCRAFT_STAGE/lib/ttn-gateway-connector/src/github.com/gogo/protobuf/protobuf/ -I$SNAPCRAFT_STAGE/lib/ttn-gateway-connector/src/github.com/TheThingsNetwork -I$SNAPCRAFT_STAGE/libprotobuf-c
       - LIBS += -L$SNAPCRAFT_STAGE/lib/paho.mqtt.embedded-c/build/output -lpaho-embed-mqtt3c -L$SNAPCRAFT_STAGE/lib/ttn-gateway-connector/bin -lttn-gateway-connector -L$SNAPCRAFT_STAGE/lib/protobuf-c/bin -lprotobuf-c -lloragw -lrt -lpthread -lm
-      
+
     after:
       - ttn-gateway-connector
       - loragateway
       - paho.mqtt.embedded-c
       - protobuf-c
-
+      artifacts:
+        - mp_pkt_fwd/mp_pkt_fwd
 
 apps:
   packet-forwarder:
