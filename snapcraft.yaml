@@ -75,7 +75,7 @@ parts:
    packetforwarder:
     plugin: make
     source-type: git
-    source: https://github.com/kersing/packet_forwarder.git
+    source: https://github.com/ryanteck/packet_forwarder-1.git
     build-packages: [libc6-dev, libc6]
     #source-subdir: mp_pkt_fwd
 
