@@ -1,6 +1,5 @@
 name: ulti-lora-backplane
-version: 0.2.3
-summary: TTN LoRa Packet Forwarder
+version: 0.2.4
 description: Collection of packages required for LoRa Packet Forwarding
 
 confinement: classic
@@ -91,6 +90,7 @@ parts:
       - protobuf-c
     artifacts:
       - mp_pkt_fwd/mp_pkt_fwd
+      - mp_pkt_fwd/global_conf.json
 
 apps:
   packet-forwarder:
