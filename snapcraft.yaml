@@ -1,5 +1,5 @@
 name: ulti-lora-backplane
-version: 0.2.5
+version: 0.2.6
 summary: TTN LoRa Packet Forwarder
 description: Collection of packages required for LoRa Packet Forwarding
 
@@ -61,7 +61,6 @@ parts:
     source-type: git
     source: https://github.com/ryanteck/ttn-gateway-connector.git
     prepare: |
-      git clone https://github.com/google/protobuf.git
       cp config.mk.in config.mk
     artifacts:
       - bin/libttn-gateway-connector.so
