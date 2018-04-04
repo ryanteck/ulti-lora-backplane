@@ -1,5 +1,6 @@
 name: ulti-lora-backplane
 version: 0.2.4
+summary: TTN LoRa Packet Forwarder
 description: Collection of packages required for LoRa Packet Forwarding
 
 confinement: classic
