@@ -37,7 +37,7 @@ parts:
     install: |
       mkdir $SNAPCRAFT_PART_INSTALL/lib/
       cp -r . $SNAPCRAFT_PART_INSTALL/lib/protobuf-c
-      sudo make install
+      make install
 
     after:
       - loragateway
@@ -52,7 +52,7 @@ parts:
     install: |
       mkdir $SNAPCRAFT_PART_INSTALL/lib/
       cp -r . $SNAPCRAFT_PART_INSTALL/lib/paho.mqtt.embedded-c/
-      sudo make install
+      make install
     prepare:
       sudo rm /usr/local/lib/libpaho-embed-mqtt3c.so  || true
     #make-install-var: /usr/local/lib/
